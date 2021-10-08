@@ -1,0 +1,99 @@
+HTML
+body
+
+    div class = header
+    h1
+    p - Use your wits to sink their ships - p
+    /div
+
+    main
+
+        section class= grid-wrapper
+            div class = userGrid
+                div * 10
+            /div
+            div class = playerTurn
+                p - It's your go -p
+            /div
+            div class=compGrid
+                div*10
+            /div
+        /section
+
+        section class = buttons
+            button id = startButton start
+            button id = resetButton reset
+        /section
+
+        section class = shipsUpdate
+            div class = userShips
+                div * 5 (different lengths to match the ships)
+            /div
+            div class = compShips
+                div * 5 (different lengths to match the ships)
+            /div
+        /section
+
+        div class = popUp
+            p - Player Wins! -p
+            p - Compter Wins! -p
+        /div
+    /main
+
+/body
+
+CSS
+.grid-wrapper{
+display:flex;
+}
+.buttons{
+display.flex;
+}
+.shipsUpdate {
+display.flex;
+}
+
+JavaScript
+Consts / Lets
+const startButton = document.querySelect('#startButton')
+const resetButton = document.querySelect('#resetButton')
+
+Start
+Allows the player to move the ships into position
+Once all ships are placed tells the player to make their first move
+
+User Grid placement BASIC
+Math.random all the ships into place.
+
+User attack choice
+User to click a point on the enemy grid.
+That attack point leaves either a red or white pin depending on hitting an enemy ship.
+User only gets one go no matter the output.
+
+Computer Grid placement
+Math.random an array of ship sizes onto the grid.
+The ships have to be placed fully within the grid.
+
+Computer Attack choice
+Computer choses a ranomd attack point on the player grid
+
+shipsUpdate colour change to show how many ships are left on each side
+When a ship is hit the colour changes to orange
+Once a ship is sunk the colour changes to red.
+
+Reset button
+Clear both boards of both ships
+Remove all the pins from the board
+Set the colours of the shipsUpdate to original
+
+STRETCH GOALS
+COMPUTER ATTACK
+If the computer misses a white pin is places on that point and next turn retruns to random selection minus the grid with a pin in it.
+If the computer hits a ship the computer choses the cells nextdoor, once two are hit the computer moves in a line at the end of the line the computer reverses until a miss.
+Once a miss move back to random.
+
+USER Grid
+User to drag and drop ships.
+Ships have to be able to rotate.
+Ships to only be able to be placed within the grid.
+Ships to not overlap ontop of each other.
