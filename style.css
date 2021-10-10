@@ -66,6 +66,111 @@ body {
   justify-content: space-around;
   margin: 20px;
 }
+#startButton {
+  height: 50px;
+  width: 120px;
+  background-color: rgba(105, 105, 241, 0.589);
+  border: 1px solid turquoise;
+  color: turquoise;
+}
+#resetButton {
+  height: 50px;
+  width: 120px;
+  background-color: rgba(105, 105, 241, 0.589);
+  border: 1px solid turquoise;
+  color: turquoise;
+}
 .shipsUpdate {
   display: flex;
+  justify-content: space-between;
+}
+.userShips {
+  width: 300px;
+  display: flex;
+  justify-content: space-evenly;
+}
+.userCarrier {
+  display: grid;
+  grid-area: carrier;
+  border: 1px solid darkblue;
+  background-color: turquoise;
+  height: 200px;
+  width: 40px;
+}
+.userBattle {
+  display: grid;
+  grid-area: battle;
+  border: 1px solid darkblue;
+  background-color: turquoise;
+  height: 160px;
+  width: 40px;
+}
+.userCruiser {
+  display: grid;
+  grid-area: cruiser;
+  border: 1px solid darkblue;
+  background-color: turquoise;
+  height: 120px;
+  width: 40px;
+}
+.userSub {
+  display: grid;
+  grid-area: sub;
+  border: 1px solid darkblue;
+  background-color: turquoise;
+  height: 120px;
+  width: 40px;
+}
+.userDestroyer {
+  display: grid;
+  grid-area: destroyer;
+  border: 1px solid darkblue;
+  background-color: turquoise;
+  height: 80px;
+  width: 40px;
+}
+.compShips {
+  width: 300px;
+  display: flex;
+  justify-content: space-evenly;
+}
+.compDestroyer {
+  display: grid;
+  grid-area: destroyer;
+  border: 1px solid darkblue;
+  background-color: turquoise;
+  height: 80px;
+  width: 40px;
+}
+.compSub {
+  display: grid;
+  grid-area: sub;
+  border: 1px solid darkblue;
+  background-color: turquoise;
+  height: 120px;
+  width: 40px;
+}
+.compCruiser {
+  display: grid;
+  grid-area: cruiser;
+  border: 1px solid darkblue;
+  background-color: turquoise;
+  height: 120px;
+  width: 40px;
+}
+.compBattle {
+  display: grid;
+  grid-area: battle;
+  border: 1px solid darkblue;
+  background-color: turquoise;
+  height: 160px;
+  width: 40px;
+}
+.compCarrier {
+  display: grid;
+  grid-area: carrier;
+  border: 1px solid darkblue;
+  background-color: turquoise;
+  height: 200px;
+  width: 40px;
 }
