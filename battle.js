@@ -13,11 +13,11 @@ const cruiser = document.querySelector('.cruiser')
 const battleship = document.querySelector('.battle')
 const carrier = document.querySelector('.carrier')
 
-
 const shipArray = [
     {
         name: 'destroyer',
         directions: [[0,1], [0,10]]
+        
     },
     {
         name: 'submarine',
@@ -39,7 +39,10 @@ const shipArray = [
 // console.log(`shiparray primary`, shipArray)
 // console.log(`before-->`,Math.floor(Math.random()*5))
 
-function randomShip(){
+let totalCoords = []
+let newCoords = []
+
+function randomShip(){ 
     const computerVehicles = [
         {
             name: 'destroyer',
@@ -101,15 +104,31 @@ function randomShip(){
     battleshipSetter()
 
     function carrierSetter() {
+        computerVehicles[4].coords = []
         let shipStart = Math.floor(Math.random() * computerCells.length)
         let link = computerVehicles[4].coords.push(shipStart)
         let direction = Math.random() > 0.5 ? computerVehicles[4].coords.push(shipStart+1,shipStart+2,shipStart+3,shipStart+4) : computerVehicles[4].coords.push(shipStart+10,shipStart+20,shipStart+30,shipStart+40)
         console.log(computerVehicles[4])
+        checkParam() 
+        console.log(totalCoords.length)
+        console.log(Array.from(newCoords).length)
     }
     carrierSetter()
 
+    function checkParam() {
+         totalCoords = computerVehicles[0].coords.concat(computerVehicles[1].coords).concat(computerVehicles[2].coords).concat(computerVehicles[3].coords).concat(computerVehicles[4].coords)
+         let newCoords = new Set(totalCoords)
+         console.log(totalCoords.length)
+         console.log(Array.from(newCoords).length)
+    }
+    for(let i = 0; i < totalCoords.length; i++) {
+        computerCells[totalCoords[i]].classList.add('enemyPosition')
+    }
+    console.log(totalCoords)
+
 }
 randomShip()
+
 
 
  // let chosenShip = computerVehicles[Math.floor(Math.random()*computerVehicles.length-1)].directions[0].length

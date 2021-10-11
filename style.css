@@ -163,3 +163,22 @@ body {
   height: 200px;
   width: 40px;
 }
+#compCarrier {
+  background-color: sandybrown;
+}
+#compBattle {
+  background-color: slategrey;
+}
+#compCruiser {
+  background-color: orange;
+}
+#compSub {
+  background-color: peru;
+}
+#compDestroyer {
+  background-color: rosybrown;
+}
+
+.enemyPosition {
+  background-color: peru;
+}
