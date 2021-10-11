@@ -75,7 +75,7 @@ Math.random an array of ship sizes onto the grid.
 The ships have to be placed fully within the grid.
 
 Computer Attack choice
-Computer choses a ranomd attack point on the player grid
+Computer choses a random attack point on the player grid
 
 shipsUpdate colour change to show how many ships are left on each side
 When a ship is hit the colour changes to orange
