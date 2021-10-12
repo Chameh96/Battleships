@@ -13,6 +13,22 @@ const cruiser = document.querySelector('.cruiser')
 const battleship = document.querySelector('.battle')
 const carrier = document.querySelector('.carrier')
 
+const width = 10
+const userSquares = []
+const computerSquares=[]
+
+
+function createBoard(grid, squares) {
+     for( let i = 0; i < width*width; i++) {
+         const square = document. createElement('div')
+         square.dataset.id = i
+        grid.appendChild(square)
+        squares.push(square)
+     }
+}
+createBoard(userGrid, userSquares)
+createBoard(computerGrid, computerSquares)
+
 const shipArray = [
     {
         name: 'destroyer',
@@ -72,6 +88,8 @@ let newCoords = []
     ]
 
 ////////////////////////////////////////////////////SETTING SHIP LOCATION AND MAKING SURE IT IS WITHIN GRID AND NOT ON ANOTHER SHIP///////////////////////////
+// computerCells.filter(x => !totalCoords.flatMap(coord => [coord-30,coord-20,coord-10,coord]))
+///////////////////////////////////////////////////////
     function shipSetter(array, x, limit) {
         const direction = Math.random() > 0.5 ? 'horizontal' : 'verticle'
         const increment = direction === 'horizontal'? 1 : 10
@@ -82,6 +100,8 @@ let newCoords = []
         const shipStart = (randomRow*10)+randomColumn
         const totalCoords = computerVehicles.flatMap(item => item.coords)
         console.log(shipStart)
+
+        //const allCoords = computerCells
         
         //array.coords.push(shipStart)
         //console.log(`ship start`, shipStart)
@@ -98,6 +118,13 @@ let newCoords = []
         newCoords = new Set(totalCoords)
         console.log(`new coords`, newCoords)
         return totalCoords.length === Array.from(newCoords).length
+
+        // let freeCoords = false
+        // if( totalCoords.length === Array.from(newCoords).length) {
+        //     let freeCoords = true
+        // }
+        // totalCoords = null 
+        // return freeCoords
     }
     isValidCoords()
 
@@ -114,11 +141,11 @@ let newCoords = []
         shipSetter(computerVehicles[3], 4, 7)
         const validVar = isValidCoords()
         console.log(validVar)
-        if (!validVar) {
-             battleshipSetter()
-        }
+        // if (!validVar) {
+        //      battleshipSetter()
+        // }
     }
-    // battleshipSetter()
+    battleshipSetter()
 
     function cruiserSetter() {
         shipSetter(computerVehicles[2], 3, 8)
@@ -128,7 +155,7 @@ let newCoords = []
     //         cruiserSetter()
     //     }
     }
-    // cruiserSetter()
+    //cruiserSetter()
 
 
     function submarineSetter() {
