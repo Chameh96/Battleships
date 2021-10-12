@@ -42,7 +42,7 @@ const shipArray = [
 let totalCoords = []
 let newCoords = []
 
-function randomShip(){ 
+ 
     const computerVehicles = [
         {
             name: 'destroyer',
@@ -70,69 +70,149 @@ function randomShip(){
             coords: []
         }
     ]
-   
-    function destoyerSetter() {
-        let shipStart = Math.floor(Math.random() * computerCells.length)
-        let link = computerVehicles[0].coords.push(shipStart)
-        let direction = Math.random() > 0.5 ? computerVehicles[0].coords.push(shipStart+1) : computerVehicles[0].coords.push(shipStart+10)
-        console.log(computerVehicles[0])
-    }
-    destoyerSetter()
 
-    function subSetter() {
+    function shipSetter(array, x) {
+        const increment = Math.random() > 0.5 ? 1 : 10
         let shipStart = Math.floor(Math.random() * computerCells.length)
-        let link = computerVehicles[1].coords.push(shipStart)
-        let direction = Math.random() > 0.5 ? computerVehicles[1].coords.push(shipStart+1,shipStart+2) : computerVehicles[1].coords.push(shipStart+10,shipStart+20)
-        console.log(computerVehicles[1])
-    }
-    subSetter()
-   
-    function cruiserSetter() {
-        let shipStart = Math.floor(Math.random() * computerCells.length)
-        let link = computerVehicles[2].coords.push(shipStart)
-        let direction = Math.random() > 0.5 ? computerVehicles[2].coords.push(shipStart+1,shipStart+2) : computerVehicles[2].coords.push(shipStart+10,shipStart+20)
-        console.log(computerVehicles[2])
-    }
-    cruiserSetter()
+        array.coords.push(shipStart)
+        //console.log(`ship start`, shipStart)
 
-    function battleshipSetter() {
-        let shipStart = Math.floor(Math.random() * computerCells.length)
-        let link = computerVehicles[3].coords.push(shipStart)
-        let direction = Math.random() > 0.5 ? computerVehicles[3].coords.push(shipStart+1,shipStart+2,shipStart+3) : computerVehicles[3].coords.push(shipStart+10,shipStart+20,shipStart+30)
-        console.log(computerVehicles[3])
+        for(let i=0; i < x; i++) {
+            array.coords.push(shipStart+increment)
+            shipStart= shipStart+increment
+        }
+        // console.log(array.coords)
     }
-    battleshipSetter()
+    // shipSetter(computerVehicles[0], 1)
+    // shipSetter(computerVehicles[1], 2)
+    // shipSetter(computerVehicles[2], 2)
+    // shipSetter(computerVehicles[3], 3)
+    // shipSetter(computerVehicles[4], 4)
+
+    function isValidCoords() {
+        totalCoords = computerVehicles[0].coords.concat(computerVehicles[1].coords).concat(computerVehicles[2].coords).concat(computerVehicles[3].coords).concat(computerVehicles[4].coords)
+        console.log(`total coords`, totalCoords)
+        newCoords = new Set(totalCoords)
+        console.log(`new coords`, newCoords)
+        return totalCoords.length === Array.from(newCoords).length
+    }
+    isValidCoords()
 
     function carrierSetter() {
-        computerVehicles[4].coords = []
-        let shipStart = Math.floor(Math.random() * computerCells.length)
-        let link = computerVehicles[4].coords.push(shipStart)
-        let direction = Math.random() > 0.5 ? computerVehicles[4].coords.push(shipStart+1,shipStart+2,shipStart+3,shipStart+4) : computerVehicles[4].coords.push(shipStart+10,shipStart+20,shipStart+30,shipStart+40)
-        console.log(computerVehicles[4])
-        checkParam() 
-        console.log(totalCoords.length)
-        console.log(Array.from(newCoords).length)
+        shipSetter(computerVehicles[4], 4)
+        isValidCoords() 
+        if (isValidCoords()=== false) {
+            carrierSetter()
+        } 
     }
     carrierSetter()
 
-    function checkParam() {
-         totalCoords = computerVehicles[0].coords.concat(computerVehicles[1].coords).concat(computerVehicles[2].coords).concat(computerVehicles[3].coords).concat(computerVehicles[4].coords)
-         let newCoords = new Set(totalCoords)
-         console.log(totalCoords.length)
-         console.log(Array.from(newCoords).length)
+    function battleshipSetter() {
+         shipSetter(computerVehicles[3], 3)
+        isValidCoords() 
+        if (isValidCoords()=== false) {
+             battleshipSetter()
+        }
     }
+    battleshipSetter()
+
+    function cruiserSetter() {
+        shipSetter(computerVehicles[2], 2)
+        isValidCoords() 
+        if (isValidCoords()=== false) {
+            cruiserSetter()
+        }
+    }
+    cruiserSetter()
+
+
+    function submarineSetter() {
+        shipSetter(computerVehicles[1], 2)
+        isValidCoords() 
+        if (isValidCoords()=== false) {
+            submarineSetter()
+        }
+    }
+    submarineSetter()
+
+    function destroyerSetter() {
+        shipSetter(computerVehicles[0], 1)
+        isValidCoords()
+        if (isValidCoords()=== false) {
+            destroyerSetter()
+        }
+    }
+    destroyerSetter()
+
+    // function rotateShips() {
+    //     if (isHorizontal) {
+           
+    //     }
+    //     if (!isHorizontal){
+
+    //     }
+    // }
+
+    // function destroyerSetter() {
+    //     let shipStart = Math.floor(Math.random() * computerCells.length)
+    //     const increment = Math.random() > 0.5 ? 1 : 10
+    //     computerVehicles[0].coords.push(shipStart)
+    //     computerVehicles[0].coords.push(shipStart+increment) 
+    //     console.log(computerVehicles[0])
+    //     isValidCoords() 
+    //     if (!isValidCoords()) {
+    //         destroyerSetter()
+    //     }
+    // }
+    // destroyerSetter()
+
+    // function subSetter() {
+    //     let shipStart = Math.floor(Math.random() * computerCells.length)
+    //     let link = computerVehicles[1].coords.push(shipStart)
+    //     let direction = Math.random() > 0.5 ? computerVehicles[1].coords.push(shipStart+1,shipStart+2) : computerVehicles[1].coords.push(shipStart+10,shipStart+20)
+    //     console.log(computerVehicles[1])
+    // }
+    // subSetter()
+   
+    // function cruiserSetter() {
+    //     let shipStart = Math.floor(Math.random() * computerCells.length)
+    //     let link = computerVehicles[2].coords.push(shipStart)
+    //     let direction = Math.random() > 0.5 ? computerVehicles[2].coords.push(shipStart+1,shipStart+2) : computerVehicles[2].coords.push(shipStart+10,shipStart+20)
+    //     console.log(computerVehicles[2])
+    // }
+    // cruiserSetter()
+
+    // function battleshipSetter() {
+    //     let shipStart = Math.floor(Math.random() * computerCells.length)
+    //     let link = computerVehicles[3].coords.push(shipStart)
+    //     let direction = Math.random() > 0.5 ? computerVehicles[3].coords.push(shipStart+1,shipStart+2,shipStart+3) : computerVehicles[3].coords.push(shipStart+10,shipStart+20,shipStart+30)
+    //     console.log(computerVehicles[3])
+    // }
+    // battleshipSetter()
+
+    // function carrierSetter() {
+    //     computerVehicles[4].coords = []
+    //     let shipStart = Math.floor(Math.random() * computerCells.length)
+    //     let link = computerVehicles[4].coords.push(shipStart)
+    //     let direction = Math.random() > 0.5 ? computerVehicles[4].coords.push(shipStart+1,shipStart+2,shipStart+3,shipStart+4) : computerVehicles[4].coords.push(shipStart+10,shipStart+20,shipStart+30,shipStart+40)
+    //     console.log(computerVehicles[4])
+    //     isValidCoords() 
+    //     if (!isValidCoords()) {
+    //         carrierSetter()
+    //     }
+    //     console.log(newCoords)
+    //     console.log(`after`, totalCoords.length)
+    //     console.log(`after`, Array.from(newCoords).length)
+    // }
+    // carrierSetter()
+
+    // function isValidCoords() {
+    //      totalCoords = computerVehicles[0].coords.concat(computerVehicles[1].coords).concat(computerVehicles[2].coords).concat(computerVehicles[3].coords).concat(computerVehicles[4].coords)
+    //      newCoords = new Set(totalCoords)
+    //      return totalCoords.length === newCoords.length
+    // }
+    
     for(let i = 0; i < totalCoords.length; i++) {
         computerCells[totalCoords[i]].classList.add('enemyPosition')
     }
     console.log(totalCoords)
-
-}
-randomShip()
-
-
-
- // let chosenShip = computerVehicles[Math.floor(Math.random()*computerVehicles.length-1)].directions[0].length
-    // console.log(`before=`, chosenShip)
-    // let direction = Math.random() > 0.5 ? 'horizontal' : 'vertical'
-    // let shipStart = Math.floor(Math.random() * computerCells.length)
-    // let newShips = computerVehicles.splice(chosenShip,1)
