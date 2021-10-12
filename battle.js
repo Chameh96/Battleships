@@ -98,19 +98,37 @@ let newCoords = []
     }
     isValidCoords()
 
+    let destroyerBoundaryVerticle = [computerCells[9], computerCells[19], computerCells[29], computerCells[39], computerCells[49], computerCells[59], computerCells[69], computerCells[79], computerCells[89]]
+    let destroyerBoundaryHorizontal = [computerCells[81], computerCells[82], computerCells[83], computerCells[84], computerCells[85], computerCells[86], computerCells[87], computerCells[88], computerCells[89], computerCells[90]]
+    let submarineBoundaryVerticle = [computerCells[8], computerCells[18],computerCells[28],computerCells[38],computerCells[48],computerCells[58], computerCells[68],computerCells[78]]
+    let submarineBoundaryHorizontal = 
+    function withinGrid() {
+        if(computerVehicles[0].coords[0] % 9){
+            
+        }
+
+    }
+
+    
+
     function carrierSetter() {
         shipSetter(computerVehicles[4], 4)
+        const validVar = isValidCoords()
+        console.log(validVar)
         isValidCoords() 
-        if (isValidCoords()=== false) {
+        if (!validVar) {
             carrierSetter()
         } 
+        
     }
     carrierSetter()
 
     function battleshipSetter() {
          shipSetter(computerVehicles[3], 3)
+        const validVar = isValidCoords()
+        console.log(validVar)
         isValidCoords() 
-        if (isValidCoords()=== false) {
+        if (!validVar) {
              battleshipSetter()
         }
     }
@@ -118,8 +136,10 @@ let newCoords = []
 
     function cruiserSetter() {
         shipSetter(computerVehicles[2], 2)
+        const validVar = isValidCoords()
+        console.log(validVar)
         isValidCoords() 
-        if (isValidCoords()=== false) {
+        if (!validVar) {
             cruiserSetter()
         }
     }
@@ -128,8 +148,10 @@ let newCoords = []
 
     function submarineSetter() {
         shipSetter(computerVehicles[1], 2)
+        const validVar = isValidCoords()
+        console.log(validVar)
         isValidCoords() 
-        if (isValidCoords()=== false) {
+        if (!validVar) {
             submarineSetter()
         }
     }
@@ -137,8 +159,10 @@ let newCoords = []
 
     function destroyerSetter() {
         shipSetter(computerVehicles[0], 1)
+        const validVar = isValidCoords()
+        console.log(validVar)
         isValidCoords()
-        if (isValidCoords()=== false) {
+        if (!validVar) {
             destroyerSetter()
         }
     }
@@ -215,4 +239,4 @@ let newCoords = []
     for(let i = 0; i < totalCoords.length; i++) {
         computerCells[totalCoords[i]].classList.add('enemyPosition')
     }
-    console.log(totalCoords)
+    //console.log(totalCoords)
