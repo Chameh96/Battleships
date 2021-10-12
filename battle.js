@@ -71,26 +71,29 @@ let newCoords = []
         }
     ]
 
-    function shipSetter(array, x) {
-        const increment = Math.random() > 0.5 ? 1 : 10
-        let shipStart = Math.floor(Math.random() * computerCells.length)
-        array.coords.push(shipStart)
+////////////////////////////////////////////////////SETTING SHIP LOCATION AND MAKING SURE IT IS WITHIN GRID AND NOT ON ANOTHER SHIP///////////////////////////
+    function shipSetter(array, x, limit) {
+        const direction = Math.random() > 0.5 ? 'horizontal' : 'verticle'
+        const increment = direction === 'horizontal'? 1 : 10
+        const rowLimit = direction === 'horizontal' ? 10 : limit
+        const columnLimit = direction === 'verticle' ? 10 : limit
+        const randomRow = Math.floor(Math.random() * rowLimit)
+        const randomColumn = Math.floor(Math.random() * columnLimit)
+        const shipStart = (randomRow*10)+randomColumn
+        const totalCoords = computerVehicles.flatMap(item => item.coords)
+        console.log(shipStart)
+        
+        //array.coords.push(shipStart)
         //console.log(`ship start`, shipStart)
 
         for(let i=0; i < x; i++) {
-            array.coords.push(shipStart+increment)
-            shipStart= shipStart+increment
+            array.coords.push(shipStart+increment*i)
         }
         // console.log(array.coords)
     }
-    // shipSetter(computerVehicles[0], 1)
-    // shipSetter(computerVehicles[1], 2)
-    // shipSetter(computerVehicles[2], 2)
-    // shipSetter(computerVehicles[3], 3)
-    // shipSetter(computerVehicles[4], 4)
-
+    
     function isValidCoords() {
-        totalCoords = computerVehicles[0].coords.concat(computerVehicles[1].coords).concat(computerVehicles[2].coords).concat(computerVehicles[3].coords).concat(computerVehicles[4].coords)
+        totalCoords = computerVehicles.flatMap(item => item.coords)
         console.log(`total coords`, totalCoords)
         newCoords = new Set(totalCoords)
         console.log(`new coords`, newCoords)
@@ -98,76 +101,62 @@ let newCoords = []
     }
     isValidCoords()
 
-    let destroyerBoundaryVerticle = [computerCells[9], computerCells[19], computerCells[29], computerCells[39], computerCells[49], computerCells[59], computerCells[69], computerCells[79], computerCells[89]]
-    let destroyerBoundaryHorizontal = [computerCells[81], computerCells[82], computerCells[83], computerCells[84], computerCells[85], computerCells[86], computerCells[87], computerCells[88], computerCells[89], computerCells[90]]
-    let submarineBoundaryVerticle = [computerCells[8], computerCells[18],computerCells[28],computerCells[38],computerCells[48],computerCells[58], computerCells[68],computerCells[78]]
-    let submarineBoundaryHorizontal = 
-    function withinGrid() {
-        if(computerVehicles[0].coords[0] % 9){
-            
-        }
-
-    }
-
+    ///////////////////////////////////////////////////////////ADDING SHIPS/////////////////////////////////////////////////////////
     
-
     function carrierSetter() {
-        shipSetter(computerVehicles[4], 4)
+        shipSetter(computerVehicles[4], 5, 6)
         const validVar = isValidCoords()
         console.log(validVar)
-        isValidCoords() 
-        if (!validVar) {
-            carrierSetter()
-        } 
-        
     }
     carrierSetter()
 
     function battleshipSetter() {
-         shipSetter(computerVehicles[3], 3)
+        shipSetter(computerVehicles[3], 4, 7)
         const validVar = isValidCoords()
         console.log(validVar)
-        isValidCoords() 
         if (!validVar) {
              battleshipSetter()
         }
     }
-    battleshipSetter()
+    // battleshipSetter()
 
     function cruiserSetter() {
-        shipSetter(computerVehicles[2], 2)
+        shipSetter(computerVehicles[2], 3, 8)
         const validVar = isValidCoords()
         console.log(validVar)
-        isValidCoords() 
-        if (!validVar) {
-            cruiserSetter()
-        }
+    //     if (!validVar) {
+    //         cruiserSetter()
+    //     }
     }
-    cruiserSetter()
+    // cruiserSetter()
 
 
     function submarineSetter() {
-        shipSetter(computerVehicles[1], 2)
+        shipSetter(computerVehicles[1], 3, 8)
         const validVar = isValidCoords()
         console.log(validVar)
-        isValidCoords() 
-        if (!validVar) {
-            submarineSetter()
-        }
+    //     if (!validVar) {
+    //         submarineSetter()
+    //     }
     }
-    submarineSetter()
+    // submarineSetter()
 
     function destroyerSetter() {
-        shipSetter(computerVehicles[0], 1)
+        shipSetter(computerVehicles[0], 2, 9)
         const validVar = isValidCoords()
         console.log(validVar)
-        isValidCoords()
-        if (!validVar) {
-            destroyerSetter()
-        }
+    //     isValidCoords()
+    //     if (!validVar) {
+    //         destroyerSetter()
+    //     }
     }
-    destroyerSetter()
+    // destroyerSetter()
 
+
+    for(let i = 0; i < totalCoords.length; i++) {
+        computerCells[totalCoords[i]].classList.add('enemyPosition')
+    }
+/////////////////////////////////////////////////////////////ROTATE SHIPS//////////////////////////////////////////////////////
     // function rotateShips() {
     //     if (isHorizontal) {
            
@@ -177,13 +166,14 @@ let newCoords = []
     //     }
     // }
 
+///////////////////////////////////////////////////OLD CODE//////////////////////////////////////////////////
+
     // function destroyerSetter() {
     //     let shipStart = Math.floor(Math.random() * computerCells.length)
     //     const increment = Math.random() > 0.5 ? 1 : 10
     //     computerVehicles[0].coords.push(shipStart)
     //     computerVehicles[0].coords.push(shipStart+increment) 
     //     console.log(computerVehicles[0])
-    //     isValidCoords() 
     //     if (!isValidCoords()) {
     //         destroyerSetter()
     //     }
@@ -236,7 +226,4 @@ let newCoords = []
     //      return totalCoords.length === newCoords.length
     // }
     
-    for(let i = 0; i < totalCoords.length; i++) {
-        computerCells[totalCoords[i]].classList.add('enemyPosition')
-    }
-    //console.log(totalCoords)
+  
