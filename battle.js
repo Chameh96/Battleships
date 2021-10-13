@@ -11,6 +11,7 @@ const cruiser = document.querySelector('.cruiser')
 const battleship = document.querySelector('.battle')
 const carrier = document.querySelector('.carrier')
 
+
 const width = 10
 
 
@@ -18,7 +19,7 @@ const width = 10
 function createBoard(grid) {
     const squares = []
      for( let i = 0; i < width*width; i++) {
-         const square = document. createElement('div')
+         const square = document.createElement('div')
          square.dataset.id = i
         grid.appendChild(square)
         squares.push(square)
@@ -28,32 +29,37 @@ function createBoard(grid) {
 const userSquares = createBoard(userGrid)
 const computerSquares = createBoard(computerGrid)
 
+let computerCells = Array.from(document.querySelectorAll('.comp-grid div'))
+let userCells = Array.from(document.querySelectorAll('.user-grid div'))
 
 const shipArray = [
     {
         name: 'destroyer',
-        directions: [[0,1], [0,10]]
+        directions: [[0,1], [0,10]],
+        coords: []
         
     },
     {
         name: 'submarine',
-        directions: [[0,1,2], [0,10,20]]
+        directions: [[0,1,2], [0,10,20]],
+        coords: []
     },
     {
         name: 'cruiser',
-        directions: [[0,1,2], [0,10,20]]
+        directions: [[0,1,2], [0,10,20]],
+        coords: []
     },
     {
         name: 'battleship',
-        directions: [[0,1,2,3], [0,10,20,30]]
+        directions: [[0,1,2,3], [0,10,20,30]],
+        coords: []
     },
     {
         name: 'carrier',
-        directions: [[0,1,2,3,4], [0,10,20,30,40]]
+        directions: [[0,1,2,3,4], [0,10,20,30,40]],
+        coords: []
     }
 ]
-// console.log(`shiparray primary`, shipArray)
-// console.log(`before-->`,Math.floor(Math.random()*5))
 
 let totalCoords = []
 let newCoords = []
@@ -87,7 +93,7 @@ let newCoords = []
         }
     ]
 
-////////////////////////////////////////////////////SETTING SHIP LOCATION AND MAKING SURE IT IS WITHIN GRID AND NOT ON ANOTHER SHIP///////////////////////////
+////////////////////////////////////////////////////SETTING COMPUTER SHIP LOCATION AND MAKING SURE IT IS WITHIN GRID AND NOT ON ANOTHER SHIP///////////////////////////
 // computerCells.filter(x => !totalCoords.flatMap(coord => [coord-30,coord-20,coord-10,coord]))
 ///////////////////////////////////////////////////////
 function buildShip(length) {
@@ -131,10 +137,10 @@ const isACellValid = (cell) => {
     validCells = validCells.filter(cell => !totalInvalidCoords.includes(parseInt(cell.dataset.id)))
     console.log(`valid cells`,  validCells)
 
-    // 5. pick one of the remaining valid cells at random
+    // STEP 5. pick one of the remaining valid cells at random
     let pickRandomCell = validCells[Math.floor(Math.random()* validCells.length)]
     const shipStart = parseInt(pickRandomCell.dataset.id)
-    // 6. from shipStart create whole ship.
+    // STEP 6. from shipStart create whole ship.
     for(let i=0; i < length; i++) {
         shipCoords.push(shipStart+increment*i)
     }
@@ -142,7 +148,7 @@ const isACellValid = (cell) => {
 }
 
 
-    ///////////////////////////////////////////////////////////ADDING SHIPS/////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////ADDING COMPUTER SHIPS/////////////////////////////////////////////////////////
     function displayShip(shipCoords, classes) {
         for (let i = 0; i < shipCoords.length; i++) {
             classes.forEach(className => {
@@ -202,64 +208,124 @@ const isACellValid = (cell) => {
     //     }
     // }
 
-///////////////////////////////////////////////////OLD CODE//////////////////////////////////////////////////
+///////////////////////////////////////////////////PLAYER HITTING A SHIP//////////////////////////////////////////////////
+console.log(computerCells)
+console.log(userCells)
 
-    // function destroyerSetter() {
-    //     let shipStart = Math.floor(Math.random() * computerCells.length)
-    //     const increment = Math.random() > 0.5 ? 1 : 10
-    //     computerVehicles[0].coords.push(shipStart)
-    //     computerVehicles[0].coords.push(shipStart+increment) 
-    //     console.log(computerVehicles[0])
-    //     if (!isValidCoords()) {
-    //         destroyerSetter()
-    //     }
-    // }
-    // destroyerSetter()
+function handleUserTurnClick(event) {
+    console.log('clicked')
+    console.log('event.target', event.target)
+    if (event.target.classList.contains('enemyPosition')) {
+        event.target.classList.add('shipHit')
+        console.log('HIT')
+    } else {
+        event.target.classList.add('shipMiss')
+        console.log('MISS')
+    }
+}
+function playerClicks() {
+    computerCells.forEach(cell => cell.addEventListener("click", handleUserTurnClick))
+}
+playerClicks()
 
-    // function subSetter() {
-    //     let shipStart = Math.floor(Math.random() * computerCells.length)
-    //     let link = computerVehicles[1].coords.push(shipStart)
-    //     let direction = Math.random() > 0.5 ? computerVehicles[1].coords.push(shipStart+1,shipStart+2) : computerVehicles[1].coords.push(shipStart+10,shipStart+20)
-    //     console.log(computerVehicles[1])
-    // }
-    // subSetter()
-   
-    // function cruiserSetter() {
-    //     let shipStart = Math.floor(Math.random() * computerCells.length)
-    //     let link = computerVehicles[2].coords.push(shipStart)
-    //     let direction = Math.random() > 0.5 ? computerVehicles[2].coords.push(shipStart+1,shipStart+2) : computerVehicles[2].coords.push(shipStart+10,shipStart+20)
-    //     console.log(computerVehicles[2])
-    // }
-    // cruiserSetter()
+//////////////////////////////////////////////////////PLAYER RANDOM SHIP PLACEMENT////////////////////////////////////////
+// function buildPlayerShip(length) {
+//     //STEP 1
+//     const shipCoords = []
+//     let validCells = userSquares
+//     //STEP 2
+//     const direction = Math.random() > 0.5 ? 'horizontal' : 'verticle'
+//     const increment = direction === 'horizontal'? 1 : width
+//     //STEP 3
+//     const columnLimit = direction === 'horizontal' ? width - length : width
+//     const rowLimit = direction === 'verticle' ? width - length : width
 
-    // function battleshipSetter() {
-    //     let shipStart = Math.floor(Math.random() * computerCells.length)
-    //     let link = computerVehicles[3].coords.push(shipStart)
-    //     let direction = Math.random() > 0.5 ? computerVehicles[3].coords.push(shipStart+1,shipStart+2,shipStart+3) : computerVehicles[3].coords.push(shipStart+10,shipStart+20,shipStart+30)
-    //     console.log(computerVehicles[3])
-    // }
-    // battleshipSetter()
+//     const isACellValid = (cell) => {
+//         // i.e. you cannot be in column 8 when column limit is 7
+//         const isACellWithinColumnLimit = parseInt(cell.dataset.id) % width <= columnLimit
+//         // i.e. you cannot be in row 7 when the row limit is 6
+//         // i.e. parseInt(cell.dataset.id) cannot be greater than 60 = width * rowLimit
+//         const isACellWithinRowLimit = parseInt(cell.dataset.id) < (width * rowLimit)
+//         return isACellWithinRowLimit && isACellWithinColumnLimit
+//     }
 
-    // function carrierSetter() {
-    //     computerVehicles[4].coords = []
-    //     let shipStart = Math.floor(Math.random() * computerCells.length)
-    //     let link = computerVehicles[4].coords.push(shipStart)
-    //     let direction = Math.random() > 0.5 ? computerVehicles[4].coords.push(shipStart+1,shipStart+2,shipStart+3,shipStart+4) : computerVehicles[4].coords.push(shipStart+10,shipStart+20,shipStart+30,shipStart+40)
-    //     console.log(computerVehicles[4])
-    //     isValidCoords() 
-    //     if (!isValidCoords()) {
-    //         carrierSetter()
-    //     }
-    //     console.log(newCoords)
-    //     console.log(`after`, totalCoords.length)
-    //     console.log(`after`, Array.from(newCoords).length)
-    // }
-    // carrierSetter()
+//     validCells = validCells.filter(isACellValid)
+//     console.log(`valid cells`,  validCells)
+//     //STEP 4
+//     // remove from list of cells any cell that is invalid because of existing ships
+//     const totalInvalidCoords = shipArray.flatMap(existingShip => {
+//         // If a ship is at 25, 35, 45, 55,
+//         // then all of these are invalid for a ship of length 3:
+//         //  23, 24, 25, 33, 34, 35, 43, 44, 45, 53, 54, 55
+//         const invalidCoords = existingShip.coords.flatMap(coord => {
+//             const invalidCoordsForCurrentCoords = []
+//             for (let i = 0; i < length; i++) {
+//                 invalidCoordsForCurrentCoords.push(coord - i * increment)
+//             }
+//             return invalidCoordsForCurrentCoords
+//         })
+//         return invalidCoords
+//     })
 
-    // function isValidCoords() {
-    //      totalCoords = computerVehicles[0].coords.concat(computerVehicles[1].coords).concat(computerVehicles[2].coords).concat(computerVehicles[3].coords).concat(computerVehicles[4].coords)
-    //      newCoords = new Set(totalCoords)
-    //      return totalCoords.length === newCoords.length
-    // }
+//     validCells = validCells.filter(cell => !totalInvalidCoords.includes(parseInt(cell.dataset.id)))
+//     console.log(`valid cells`,  validCells)
+
+//     // STEP 5. pick one of the remaining valid cells at random
+//     let pickRandomCell = validCells[Math.floor(Math.random()* validCells.length)]
+//     const shipStart = parseInt(pickRandomCell.dataset.id)
+//     // STEP 6. from shipStart create whole ship.
+//     for(let i=0; i < length; i++) {
+//         shipCoords.push(shipStart+increment*i)
+//     }
+//     return shipCoords
+// }
+
+
+//     ///////////////////////////////////////////////////////////ADDING PLAYER SHIPS/////////////////////////////////////////////////////////
+//     function displayShip(shipCoords, classes) {
+//         for (let i = 0; i < shipCoords.length; i++) {
+//             classes.forEach(className => {
+//                 userSquares[shipCoords[i]].classList.add(className)
+//             })
+//         }
+//     }
+
+
+//     function carrierPlayerSetter() {
+//         console.log("CARRIER TIME")
+//         const shipCoords = buildPlayerShip(5)
+//         console.log(shipCoords)
+//         shipArray[4].coords = shipCoords
+//         displayShip(shipCoords, ['playerPosition', 'carrier'])
+//     }
+//     carrierPlayerSetter()
     
-  
+//     function battleshipPlayerSetter() {
+//         console.log("BATTLESHIP TIME")
+//         const shipCoords = buildPlayerShip(4)
+//         console.log(shipCoords)
+//         shipArray[3].coords = shipCoords
+//         displayShip(shipCoords, ['playerPosition', 'battleship'])
+//     }
+//     battleshipPlayerSetter()
+
+//     function cruiserPlayerSetter() {
+
+//         shipArray[2].coords = buildPlayerShip(3)
+//         displayShip(shipArray[2].coords, ['playerPosition', 'cruiser'])
+//     }
+//     cruiserPlayerSetter()
+
+
+//     function submarinePlayerSetter() {
+//         shipArray[1].coords = buildPlayerShip(3)
+//         displayShip(shipArray[1].coords, ['playerPosition', 'submarine'])
+//     }
+//     submarinePlayerSetter()
+
+//     function destroyerPlayerSetter() {
+//         shipArray[0].coords = buildPlayerShip(2)
+//         displayShip(shipArray[0].coords, ['playerPosition', 'destroyer'])
+//     }
+//     destroyerPlayerSetter()
+

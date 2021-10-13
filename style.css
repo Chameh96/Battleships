@@ -188,7 +188,7 @@ body {
   background-color: peru;
 }
 .carrier {
-  background-color: hotpink;
+  background-color: darkslategray;
 }
 .battleship {
   background-color: rebeccapurple;
@@ -201,4 +201,16 @@ body {
 }
 .destroyer {
   background-color: yellow;
+}
+.shipHit {
+  background-color: red;
+  /* background-image: url(./battlehit.png); */
+  height: 35px;
+  width: 35px;
+}
+.shipMiss {
+  /* background-image: url(./battlemiss.png); */
+  background-color: white;
+  height: 35px;
+  width: 35px;
 }
