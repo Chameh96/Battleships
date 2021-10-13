@@ -60,6 +60,13 @@ body {
   justify-content: space-around;
   margin: 20px;
 }
+#reRollButton {
+  height: 50px;
+  width: 120px;
+  background-color: rgba(105, 105, 241, 0.589);
+  border: 1px solid turquoise;
+  color: turquoise;
+}
 #startButton {
   height: 50px;
   width: 120px;
@@ -83,41 +90,66 @@ body {
   display: flex;
   justify-content: space-evenly;
 }
-#userCarrier {
-  display: grid;
-  grid-area: carrier;
+.carrier-container-verticle {
+  height: 40px;
+  width: 200px;
+  border: 1px solid darkblue;
+  background-color: turquoise;
+  flex-wrap: wrap;
+}
+.battleship-container-verticle {
+  height: 40px;
+  width: 160px;
+  border: 1px solid darkblue;
+  background-color: turquoise;
+  flex-wrap: wrap;
+}
+.cruiser-container-verticle {
+  border: 1px solid darkblue;
+  background-color: turquoise;
+  height: 40px;
+  width: 120px;
+  flex-wrap: wrap;
+}
+.submarine-container-verticle {
+  border: 1px solid darkblue;
+  background-color: turquoise;
+  height: 40px;
+  width: 120px;
+  flex-wrap: wrap;
+}
+.destroyer-container-verticle {
+  border: 1px solid darkblue;
+  background-color: turquoise;
+  height: 40px;
+  width: 80px;
+  flex-wrap: wrap;
+}
+.carrier-container {
   border: 1px solid darkblue;
   background-color: turquoise;
   height: 200px;
   width: 40px;
 }
-#userBattle {
-  display: grid;
-  grid-area: battle;
+.battleship-container {
   border: 1px solid darkblue;
   background-color: turquoise;
   height: 160px;
   width: 40px;
 }
-#userCruiser {
-  display: grid;
-  grid-area: cruiser;
+.cruiser-container {
   border: 1px solid darkblue;
   background-color: turquoise;
   height: 120px;
   width: 40px;
 }
-#userSub {
-  display: grid;
-  grid-area: sub;
+.battleship-container {
   border: 1px solid darkblue;
   background-color: turquoise;
   height: 120px;
   width: 40px;
 }
-#userDestroyer {
-  display: grid;
-  grid-area: destroyer;
+.destroyer-container {
   border: 1px solid darkblue;
   background-color: turquoise;
   height: 80px;

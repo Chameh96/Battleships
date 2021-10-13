@@ -1,16 +1,22 @@
 const startButton = document.querySelector('#startButton')
 const resetButton = document.querySelector('#resetButton')
+const randomiseButton = document.querySelector('#reRollButton')
 const userGrid = document.querySelector('.user-grid')
 const computerGrid = document.querySelector('.comp-grid')
 const userShips = document.querySelector('.userShips')
+const ships = document.querySelectorAll('.ship')
 const computerShips = document.querySelector('.compShips')
 const turnDisplay = document.querySelector('.turns')
-const destroyer = document.querySelector('.destroyer')
-const submarine = document.querySelector('.sub')
-const cruiser = document.querySelector('.cruiser')
-const battleship = document.querySelector('.battle')
-const carrier = document.querySelector('.carrier')
+const destroyer = document.querySelector('.destroyer-container')
+const submarine = document.querySelector('.submarine-container')
+const cruiser = document.querySelector('.cruiser-container')
+const battleship = document.querySelector('.battleship-container')
+const carrier =document.querySelector('.carrier-container')
+let turnDisplay = document.querySelector('.whoGo')
+let gameOver = false
+let currentPlayer = 'user'
 
+let isHorizontal = true
 
 const width = 10
 
@@ -198,15 +204,20 @@ const isACellValid = (cell) => {
     }
     destroyerSetter()
 
+    
 /////////////////////////////////////////////////////////////ROTATE SHIPS//////////////////////////////////////////////////////
-    // function rotateShips() {
+    // function rotate() {
     //     if (isHorizontal) {
-           
-    //     }
-    //     if (!isHorizontal){
-
+    //        destroyer.classList.toggle('destroyer-container-verticle')
+    //        submarine.classList.toggle('submarine-container-verticle')
+    //        cruiser.classList.toggle('cruiser-container-verticle')
+    //        battleship.classList.toggle('battleship-container-verticle')
+    //        carrier.classList.toggle('carrier-container-verticle')
+    //        isHorizontal = false
     //     }
     // }
+    
+    
 
 ///////////////////////////////////////////////////PLAYER HITTING A SHIP//////////////////////////////////////////////////
 console.log(computerCells)
@@ -228,104 +239,215 @@ function playerClicks() {
 }
 playerClicks()
 
-//////////////////////////////////////////////////////PLAYER RANDOM SHIP PLACEMENT////////////////////////////////////////
-// function buildPlayerShip(length) {
-//     //STEP 1
-//     const shipCoords = []
-//     let validCells = userSquares
-//     //STEP 2
-//     const direction = Math.random() > 0.5 ? 'horizontal' : 'verticle'
-//     const increment = direction === 'horizontal'? 1 : width
-//     //STEP 3
-//     const columnLimit = direction === 'horizontal' ? width - length : width
-//     const rowLimit = direction === 'verticle' ? width - length : width
+//////////////////////////////////// DRAGGING USER SHIPS /////////////////////////////
+// ships.forEach(ship => ship.addEventListener('dragstart', dragStart))
+// userSquares.forEach(square => square.addEventListener('dragstart', dragStart))
+// userSquares.forEach(square => square.addEventListener('dragover', dragOver))
+// userSquares.forEach(square => square.addEventListener('dragenter', dragEnter))
+// userSquares.forEach(square => square.addEventListener('dragleave', dragLeave))
+// userSquares.forEach(square => square.addEventListener('drop', dragDrop))
+// userSquares.forEach(square => square.addEventListener('dragend', dragEnd))
 
-//     const isACellValid = (cell) => {
-//         // i.e. you cannot be in column 8 when column limit is 7
-//         const isACellWithinColumnLimit = parseInt(cell.dataset.id) % width <= columnLimit
-//         // i.e. you cannot be in row 7 when the row limit is 6
-//         // i.e. parseInt(cell.dataset.id) cannot be greater than 60 = width * rowLimit
-//         const isACellWithinRowLimit = parseInt(cell.dataset.id) < (width * rowLimit)
-//         return isACellWithinRowLimit && isACellWithinColumnLimit
+// let selectedShipNameWithIndex  
+// let draggedShip
+// let draggedShipLength
+
+
+
+// ships.forEach(ship => ship.addEventListener('mousedown', (e) => {
+//     selectedShipNameWithIndex = e.target.id
+//     console.log(selectedShipNameWithIndex)
+// }))
+
+// function dragStart(e) {
+//     draggedShip = this
+//     draggedShipLength = this.childNodes.length
+//     console.log(draggedShip)
+// }
+
+// function dragOver(e) {
+//     e.preventDefault()
+// }
+
+// function dragEnter(e) {
+//     e.preventDefault()
+// }
+
+// function dragLeave() {
+//     console.log('drag leave')
+    
+// }
+
+// function dragDrop() {
+//     let shipNameWithLastId = draggedShip.lastChild.id
+//     let shipClass = shipNameWithLastId.slice(0,-2)
+//     console.log(shipClass)
+//     let lastShipIndex = parseInt(shipNameWithLastId.substr(-1))
+//     let shipLastId = lastShipIndex + parseInt(this.dataset.id)
+//     console.log(shipLastId)
+
+//     selectedShipIndex = parseInt(selectedShipNameWithIndex.substr(-1))
+//     console.log(selectedShipIndex)
+
+//     shipLastId = shipLastId - selectedShipIndex
+
+//     for (let i=0; i < draggedShipLength; i++) {
+//         userSquares[parseInt(this.dataset.id) - selectedShipIndex + width*i].classList.add('playerShip', shipClass)
 //     }
 
-//     validCells = validCells.filter(isACellValid)
-//     console.log(`valid cells`,  validCells)
-//     //STEP 4
-//     // remove from list of cells any cell that is invalid because of existing ships
-//     const totalInvalidCoords = shipArray.flatMap(existingShip => {
-//         // If a ship is at 25, 35, 45, 55,
-//         // then all of these are invalid for a ship of length 3:
-//         //  23, 24, 25, 33, 34, 35, 43, 44, 45, 53, 54, 55
-//         const invalidCoords = existingShip.coords.flatMap(coord => {
-//             const invalidCoordsForCurrentCoords = []
-//             for (let i = 0; i < length; i++) {
-//                 invalidCoordsForCurrentCoords.push(coord - i * increment)
-//             }
-//             return invalidCoordsForCurrentCoords
-//         })
-//         return invalidCoords
-//     })
+    
+// }
 
-//     validCells = validCells.filter(cell => !totalInvalidCoords.includes(parseInt(cell.dataset.id)))
-//     console.log(`valid cells`,  validCells)
-
-//     // STEP 5. pick one of the remaining valid cells at random
-//     let pickRandomCell = validCells[Math.floor(Math.random()* validCells.length)]
-//     const shipStart = parseInt(pickRandomCell.dataset.id)
-//     // STEP 6. from shipStart create whole ship.
-//     for(let i=0; i < length; i++) {
-//         shipCoords.push(shipStart+increment*i)
-//     }
-//     return shipCoords
+// function dragEnd() {
+    
 // }
 
 
-//     ///////////////////////////////////////////////////////////ADDING PLAYER SHIPS/////////////////////////////////////////////////////////
-//     function displayShip(shipCoords, classes) {
-//         for (let i = 0; i < shipCoords.length; i++) {
-//             classes.forEach(className => {
-//                 userSquares[shipCoords[i]].classList.add(className)
-//             })
-//         }
-//     }
+//////////////////////////////////////////////////////PLAYER RANDOM SHIP PLACEMENT////////////////////////////////////////
+function buildPlayerShip(length) {
+    //STEP 1
+    const userShipCoords = []
+    let validCells = userSquares
+    //STEP 2
+    const direction = Math.random() > 0.5 ? 'horizontal' : 'verticle'
+    const increment = direction === 'horizontal'? 1 : width
+    //STEP 3
+    const columnLimit = direction === 'horizontal' ? width - length : width
+    const rowLimit = direction === 'verticle' ? width - length : width
+
+    const isACellValid = (cell) => {
+        // i.e. you cannot be in column 8 when column limit is 7
+        const isACellWithinColumnLimit = parseInt(cell.dataset.id) % width <= columnLimit
+        // i.e. you cannot be in row 7 when the row limit is 6
+        // i.e. parseInt(cell.dataset.id) cannot be greater than 60 = width * rowLimit
+        const isACellWithinRowLimit = parseInt(cell.dataset.id) < (width * rowLimit)
+        return isACellWithinRowLimit && isACellWithinColumnLimit
+    }
+
+    validCells = validCells.filter(isACellValid)
+    console.log(`valid cells`,  validCells)
+    //STEP 4
+    // remove from list of cells any cell that is invalid because of existing ships
+    const totalInvalidCoords = shipArray.flatMap(existingShip => {
+        // If a ship is at 25, 35, 45, 55,
+        // then all of these are invalid for a ship of length 3:
+        //  23, 24, 25, 33, 34, 35, 43, 44, 45, 53, 54, 55
+        const invalidCoords = existingShip.coords.flatMap(coord => {
+            const invalidCoordsForCurrentCoords = []
+            for (let i = 0; i < length; i++) {
+                invalidCoordsForCurrentCoords.push(coord - i * increment)
+            }
+            return invalidCoordsForCurrentCoords
+        })
+        return invalidCoords
+    })
+
+    validCells = validCells.filter(cell => !totalInvalidCoords.includes(parseInt(cell.dataset.id)))
+    console.log(`valid cells`,  validCells)
+
+    // STEP 5. pick one of the remaining valid cells at random
+    let pickRandomCell = validCells[Math.floor(Math.random()* validCells.length)]
+    const shipStart = parseInt(pickRandomCell.dataset.id)
+    // STEP 6. from shipStart create whole ship.
+    for(let i=0; i < length; i++) {
+        userShipCoords.push(shipStart+increment*i)
+    }
+    return userShipCoords
+}
 
 
-//     function carrierPlayerSetter() {
-//         console.log("CARRIER TIME")
-//         const shipCoords = buildPlayerShip(5)
-//         console.log(shipCoords)
-//         shipArray[4].coords = shipCoords
-//         displayShip(shipCoords, ['playerPosition', 'carrier'])
-//     }
-//     carrierPlayerSetter()
+///////////////////////////////////////////////////////////ADDING PLAYER SHIPS/////////////////////////////////////////////////////////
+    function displayPlayerShip(userShipCoords, classes) {
+        for (let i = 0; i < userShipCoords.length; i++) {
+            classes.forEach(className => {
+                userSquares[userShipCoords[i]].classList.add(className)
+            })
+        }
+    }
+
+
+    function carrierPlayerSetter() {
+        console.log("CARRIER TIME")
+        const userShipCoords = buildPlayerShip(5)
+        console.log(userShipCoords)
+        shipArray[4].coords = userShipCoords
+        displayPlayerShip(userShipCoords, ['playerPosition', 'carrier'])
+    }
+    carrierPlayerSetter()
     
-//     function battleshipPlayerSetter() {
-//         console.log("BATTLESHIP TIME")
-//         const shipCoords = buildPlayerShip(4)
-//         console.log(shipCoords)
-//         shipArray[3].coords = shipCoords
-//         displayShip(shipCoords, ['playerPosition', 'battleship'])
-//     }
-//     battleshipPlayerSetter()
+    function battleshipPlayerSetter() {
+        console.log("BATTLESHIP TIME")
+        const userShipCoords = buildPlayerShip(4)
+        console.log(userShipCoords)
+        shipArray[3].coords = userShipCoords
+        displayPlayerShip(userShipCoords, ['playerPosition', 'battleship'])
+    }
+    battleshipPlayerSetter()
 
-//     function cruiserPlayerSetter() {
+    function cruiserPlayerSetter() {
 
-//         shipArray[2].coords = buildPlayerShip(3)
-//         displayShip(shipArray[2].coords, ['playerPosition', 'cruiser'])
-//     }
-//     cruiserPlayerSetter()
+        shipArray[2].coords = buildPlayerShip(3)
+        displayPlayerShip(shipArray[2].coords, ['playerPosition', 'cruiser'])
+    }
+    cruiserPlayerSetter()
 
 
-//     function submarinePlayerSetter() {
-//         shipArray[1].coords = buildPlayerShip(3)
-//         displayShip(shipArray[1].coords, ['playerPosition', 'submarine'])
-//     }
-//     submarinePlayerSetter()
+    function submarinePlayerSetter() {
+        shipArray[1].coords = buildPlayerShip(3)
+        displayPlayerShip(shipArray[1].coords, ['playerPosition', 'submarine'])
+    }
+    submarinePlayerSetter()
 
-//     function destroyerPlayerSetter() {
-//         shipArray[0].coords = buildPlayerShip(2)
-//         displayShip(shipArray[0].coords, ['playerPosition', 'destroyer'])
-//     }
-//     destroyerPlayerSetter()
+    function destroyerPlayerSetter() {
+        shipArray[0].coords = buildPlayerShip(2)
+        displayPlayerShip(shipArray[0].coords, ['playerPosition', 'destroyer'])
+    }
+    destroyerPlayerSetter()
+
+    function reassignShips() {
+        clearPlayerShips()
+        carrierPlayerSetter()
+        battleshipPlayerSetter()
+        cruiserPlayerSetter()
+        submarinePlayerSetter()
+        destroyerPlayerSetter()
+    }
+
+    randomiseButton.addEventListener('click', reassignShips )
+    /////////////////////////////////////////////////////////COMPUTER RANDOM ATTACK///////////////////////////////////////////////////////////
+
+    //splice from array so doesnt do same move twice
+
+    //do computer turn true/false if player turn is going
+
+    console.log(userCells)
+
+    function computerTurn() {
+
+        computerRandomChoice = userCells[Math.floor(Math.random()* userCells.length)]
+
+    if (computerRandomChoice.target.classList.contains('playerPosition')) {
+        computerRandomChoice.target.classList.add('shipHit')
+        console.log('HIT')
+    } else {
+        computerRandomChoice.target.classList.add('shipMiss')
+        console.log('MISS')
+    }
+    }
+
+    ///////////////////////////////////GAME LOGIC////////////////////////////////////////
+    function playGame() {
+        if (gameOver) return
+        if (currentPlayer === 'user') {
+
+        }
+    }
+
+    ////////////////////////////////////////////////RESET GAME///////////////////////////////////////////////////////////
+
+    function clearPlayerShips() {
+        userCells.forEach(cellId => cellId.classList.remove('playerPosition', 'carrier','battleship', 'cruiser', 'submarine', 'destroyer'))
+    }
+    
+
 

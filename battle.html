@@ -22,38 +22,17 @@
         <div class="comp-grid"></div>
       </section>
       <section class="buttons">
+        <button id='reRollButton'>Randomise Ships</button>
         <button id="startButton">Start Game</button>
         <button id="resetButton">Reset Game</button>
       </section>
       <section class="shipsUpdate">
         <div class="userShips">
-          <div class="carrier" id="userCarrier" draggable="true">
-            <div id="userCarrier-0"></div>
-            <div id="userCarrier-1"></div>
-            <div id="userCarrier-2"></div>
-            <div id="userCarrier-3"></div>
-            <div id="userCarrier-4"></div>
-          </div>
-          <div class="battle" id="userBattle" draggable="true">
-            <div id="userBattle-0"></div>
-            <div id="userBattle-1"></div>
-            <div id="userBattle-2"></div>
-            <div id="userBattle-3"></div>
-          </div>
-          <div class="cruiser" id="userCruiser" draggable="true">
-            <div id="userCruiser-0"></div>
-            <div id="userCruiser-1"></div>
-            <div id="userCruiser-2"></div>
-          </div>
-          <div class="sub" id="userSub" draggable="true">
-            <div id="userSub-0"></div>
-            <div id="userSub-1"></div>
-            <div id="userSub-2"></div>
-          </div>
-          <div class="destroyer" id="userDestroyer" draggable="true">
-            <div id="userDestroyer-0"></div>
-            <div id="userDestroyer-1"></div>
-          </div>
+          <div class="ship carrier-container" id="userCarrier" draggable="true"><div id="carrier-0"></div><div id="carrier-1"></div><div id="carrier-2"></div><div id="carrier-3"></div><div id="carrier-4"></div></div>
+          <div class="ship battleship-container" id="userBattle" draggable="true"><div id="battle-0"></div><div id="battle-1"></div><div id="battle-2"></div><div id="battle-3"></div></div>
+          <div class="ship cruiser-container" id="userCruiser" draggable="true"><div id="cruiser-0"></div><div id="cruiser-1"></div><div id="cruiser-2"></div></div>
+          <div class="ship submarine-container" id="userSub" draggable="true"><div id="submarine-0"></div><div id="submarine-1"></div><div id="submarine-2"></div></div>
+          <div class="ship destroyer-container" id="userDestroyer" draggable="true"></div><div id="destroyer-0"></div><div id="destroyer-1"></div></div>
         </div>
         <div class="compShips">
           <div class="carrier" id="compCarrier">
