@@ -29,7 +29,7 @@ body {
   align-self: center;
   color: yellow;
 }
-/* .user-grid,
+.user-grid,
 .comp-grid {
   border: 1px solid darkblue;
   background-color: turquoise;
@@ -41,27 +41,19 @@ body {
   gap: 0px;
   width: 400px;
   height: 400px;
-} */
-.user-grid,
-.comp-grid {
-  display: flex;
-  flex-wrap: wrap;
-  height: 400px;
-  width: 400px;
-  background-color: grey;
-  border: 1px solid greenyellow;
 }
+
 .user-grid div {
   border: 1px solid darkblue;
-  height: 39px;
-  width: 39px;
+  height: 39.2px;
+  width: 39.2px;
   padding: 0%;
 }
 .comp-grid div {
   border: 1px solid darkblue;
   padding: 0%;
-  height: 39px;
-  width: 39px;
+  height: 39.2px;
+  width: 39.2px;
 }
 .buttons {
   display: flex;
@@ -194,4 +186,19 @@ body {
 
 .enemyPosition {
   background-color: peru;
+}
+.carrier {
+  background-color: hotpink;
+}
+.battleship {
+  background-color: rebeccapurple;
+}
+.cruiser {
+  background-color: indigo;
+}
+.submarine {
+  background-color: lightgreen;
+}
+.destroyer {
+  background-color: yellow;
 }

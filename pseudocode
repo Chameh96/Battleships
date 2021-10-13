@@ -97,3 +97,14 @@ User to drag and drop ships.
 Ships have to be able to rotate.
 Ships to only be able to be placed within the grid.
 Ships to not overlap ontop of each other.
+
+Section for chosing ship coords
+
+1. Start with list of all of the cells
+2. chose a direction
+3. remove from the list of valid cells any cell that is invalid for direction e.g. too close to right for carrier
+   if ship direction is horizontal, max width is width minus ship length
+   if ship direction is verticle, max height is width minus ship length.
+4. remove from list of cells any cell that is invalid because of existing ships
+5. pick one of the remaining valid cells at random
+6. from shipStart create whole ship.
