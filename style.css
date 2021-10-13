@@ -81,11 +81,18 @@ body {
   border: 1px solid turquoise;
   color: turquoise;
 }
+#computerGo {
+  height: 50px;
+  width: 120px;
+  background-color: rgba(105, 105, 241, 0.589);
+  border: 1px solid turquoise;
+  color: turquoise;
+}
 .shipsUpdate {
   display: flex;
   justify-content: space-between;
 }
-.userShips {
+/* .userShips {
   width: 300px;
   display: flex;
   justify-content: space-evenly;
@@ -214,12 +221,15 @@ body {
 }
 #compDestroyer {
   background-color: rosybrown;
-}
+} */
 
 .enemyPosition {
-  background-color: peru;
+  background-color: turquoise;
 }
-.carrier {
+.playerPosition {
+  background-color: rebeccapurple;
+}
+/* .carrier {
   background-color: darkslategray;
 }
 .battleship {
@@ -233,7 +243,7 @@ body {
 }
 .destroyer {
   background-color: yellow;
-}
+} */
 .shipHit {
   background-color: red;
   /* background-image: url(./battlehit.png); */

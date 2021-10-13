@@ -1,4 +1,5 @@
 const startButton = document.querySelector('#startButton')
+const computersGo = document.querySelector('#computerGo')
 const resetButton = document.querySelector('#resetButton')
 const randomiseButton = document.querySelector('#reRollButton')
 const userGrid = document.querySelector('.user-grid')
@@ -6,7 +7,6 @@ const computerGrid = document.querySelector('.comp-grid')
 const userShips = document.querySelector('.userShips')
 const ships = document.querySelectorAll('.ship')
 const computerShips = document.querySelector('.compShips')
-const turnDisplay = document.querySelector('.turns')
 const destroyer = document.querySelector('.destroyer-container')
 const submarine = document.querySelector('.submarine-container')
 const cruiser = document.querySelector('.cruiser-container')
@@ -237,7 +237,7 @@ function handleUserTurnClick(event) {
 function playerClicks() {
     computerCells.forEach(cell => cell.addEventListener("click", handleUserTurnClick))
 }
-playerClicks()
+
 
 //////////////////////////////////// DRAGGING USER SHIPS /////////////////////////////
 // ships.forEach(ship => ship.addEventListener('dragstart', dragStart))
@@ -422,32 +422,56 @@ function buildPlayerShip(length) {
 
     console.log(userCells)
 
-    function computerTurn() {
+    function computerGo() {
+        let random = Math.floor(Math.random() * userCells.length)
 
-        computerRandomChoice = userCells[Math.floor(Math.random()* userCells.length)]
-
-    if (computerRandomChoice.target.classList.contains('playerPosition')) {
-        computerRandomChoice.target.classList.add('shipHit')
-        console.log('HIT')
-    } else {
-        computerRandomChoice.target.classList.add('shipMiss')
-        console.log('MISS')
-    }
-    }
-
-    ///////////////////////////////////GAME LOGIC////////////////////////////////////////
-    function playGame() {
-        if (gameOver) return
-        if (currentPlayer === 'user') {
-
+        if (userCells[random].classList.contains('playerPosition')) {
+            userCells[random].classList.add('shipHit')
+        } else {
+            userCells[random].classList.add('shipMiss')
         }
     }
+    ///////////////////////////////////GAME LOGIC////////////////////////////////////////
+    function playGame() {
+        // if (gameOver) return
+        if (currentPlayer === 'user') {
+            turnDisplay.innerHTML = 'Player'
+            playerClicks()
+            
 
+        }
+        currentPlayer = 'computer'
+        if (currentPlayer === 'computer') {
+            turnDisplay.innerHTML = 'Computer'
+            setTimeout (computerGo, 1000)
+        }
+        currentPlayer = 'user'
+    }
+    computersGo.addEventListener('click', playGame)
+
+//     console.log(computerCells)
+// console.log(userCells)
+
+// function handleUserTurnClick(event) {
+//     console.log('clicked')
+//     console.log('event.target', event.target)
+//     if (event.target.classList.contains('enemyPosition')) {
+//         event.target.classList.add('shipHit')
+//         console.log('HIT')
+//     } else {
+//         event.target.classList.add('shipMiss')
+//         console.log('MISS')
+//     }
+// }
+// function playerClicks() {
+//     computerCells.forEach(cell => cell.addEventListener("click", handleUserTurnClick))
+// }
+// playerClicks()
     ////////////////////////////////////////////////RESET GAME///////////////////////////////////////////////////////////
 
     function clearPlayerShips() {
-        userCells.forEach(cellId => cellId.classList.remove('playerPosition', 'carrier','battleship', 'cruiser', 'submarine', 'destroyer'))
+        userCells.forEach(cellId => cellId.classList.remove('playerPosition', 'carrier','battleship', 'cruiser', 'submarine', 'destroyer', 'shipHit', 'shipMiss'))
     }
     
 
-
+// TO WIN THE GAME, PUT EVERYTHING WITH CLASS LIST PLAYER && CLASSLIST OF SHIPHIT INTO AN ARRAY< IF THAT ARRAY REACHES LENGTH 17 = GAME OVER
