@@ -18,6 +18,7 @@ let gameOver = false
 let currentPlayer = 'user'
 const audio = document.querySelector('#tunes')
 const audio1 = new Audio('piratesocarribbean.mp3')
+audio1.volume = 0.1
 
 let isHorizontal = true
 
