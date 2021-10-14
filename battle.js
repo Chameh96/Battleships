@@ -126,7 +126,6 @@ const isACellValid = (cell) => {
 }
 
     validCells = validCells.filter(isACellValid)
-    console.log(`valid cells`,  validCells)
     //STEP 4
     // remove from list of cells any cell that is invalid because of existing ships
     const totalInvalidCoords = computerVehicles.flatMap(existingShip => {
@@ -144,7 +143,6 @@ const isACellValid = (cell) => {
     })
 
     validCells = validCells.filter(cell => !totalInvalidCoords.includes(parseInt(cell.dataset.id)))
-    console.log(`valid cells`,  validCells)
 
     // STEP 5. pick one of the remaining valid cells at random
     let pickRandomCell = validCells[Math.floor(Math.random()* validCells.length)]
@@ -168,20 +166,16 @@ const isACellValid = (cell) => {
 
 
     function carrierSetter() {
-        console.log("CARRIER TIME")
         //shipSetter(computerVehicles[4], 5, 6)
         const shipCoords = buildShip(5)
-        console.log(shipCoords)
         computerVehicles[4].coords = shipCoords
         displayShip(shipCoords, ['enemyPosition', 'carrier'])
     }
     carrierSetter()
     
     function battleshipSetter() {
-        console.log("BATTLESHIP TIME")
         //shipSetter(computerVehicles[3], 4, 7)
         const shipCoords = buildShip(4)
-        console.log(shipCoords)
         computerVehicles[3].coords = shipCoords
         displayShip(shipCoords, ['enemyPosition', 'battleship'])
     }
@@ -307,7 +301,6 @@ function buildPlayerShip(length) {
     }
 
     validCells = validCells.filter(isACellValid)
-    console.log(`valid cells`,  validCells)
     //STEP 4
     // remove from list of cells any cell that is invalid because of existing ships
     const totalInvalidCoords = shipArray.flatMap(existingShip => {
@@ -325,7 +318,6 @@ function buildPlayerShip(length) {
     })
 
     validCells = validCells.filter(cell => !totalInvalidCoords.includes(parseInt(cell.dataset.id)))
-    console.log(`valid cells`,  validCells)
 
     // STEP 5. pick one of the remaining valid cells at random
     let pickRandomCell = validCells[Math.floor(Math.random()* validCells.length)]
@@ -349,18 +341,14 @@ function buildPlayerShip(length) {
 
 
     function carrierPlayerSetter() {
-        console.log("CARRIER TIME")
         const userShipCoords = buildPlayerShip(5)
-        console.log(userShipCoords)
         shipArray[4].coords = userShipCoords
         displayPlayerShip(userShipCoords, ['playerPosition', 'carrier'])
     }
     carrierPlayerSetter()
     
     function battleshipPlayerSetter() {
-        console.log("BATTLESHIP TIME")
         const userShipCoords = buildPlayerShip(4)
-        console.log(userShipCoords)
         shipArray[3].coords = userShipCoords
         displayPlayerShip(userShipCoords, ['playerPosition', 'battleship'])
     }
@@ -386,34 +374,26 @@ function buildPlayerShip(length) {
     }
     destroyerPlayerSetter()
 
-    function reassignShips() {
-        clearPlayerShips()
-        carrierPlayerSetter()
-        battleshipPlayerSetter()
-        cruiserPlayerSetter()
-        submarinePlayerSetter()
-        destroyerPlayerSetter()
-    }
-
-    randomiseButton.addEventListener('click', reassignShips )
 
     ///////////////////////////////////////////////////PLAYER HITTING A SHIP//////////////////////////////////////////////////
 console.log(computerCells)
 console.log(userCells)
 
 function handleUserTurnClick(event) {
-    console.log('clicked')
     console.log('event.target', event.target)
     if (event.target.classList.contains('enemyPosition')) {
         event.target.classList.add('shipHit')
-        console.log('HIT')
     } else {
         event.target.classList.add('shipMiss')
-        console.log('MISS')
     }
     currentPlayer = 'computer'
     currentPoints()
-    setTimeout(computerGo, 500)
+    if(!keepPlaying()){
+        setTimeout(computerGo, 500)
+    } else {
+        showFinalScores()
+    }
+
     
 }
 function playerClicks() {
@@ -428,12 +408,15 @@ function playerClicks() {
     //do computer turn true/false if player turn is going
 
     console.log(userCells)
-    computerAttackChoice = userCells
+    let computerAttackChoice = Array.from(userCells)
 
     function computerGo() {
         let random = Math.floor(Math.random() * computerAttackChoice.length)
         const index = computerAttackChoice.indexOf(random)
+        console.log(computerAttackChoice.length)
         computerAttackChoice.splice(index,1)
+        console.log(computerAttackChoice.length)
+        console.log(userCells.length)
 
         if (computerAttackChoice[random].classList.contains('playerPosition')) {
             computerAttackChoice[random].classList.add('shipHit')
@@ -443,7 +426,12 @@ function playerClicks() {
        
         currentPlayer = 'user'
         currentPoints()
-        playerClicks()
+        if (!keepPlaying()) {
+            playerClicks()
+        } else {
+            showFinalScores()
+        }
+            
         
     }
     ///////////////////////////////////GAME LOGIC////////////////////////////////////////
@@ -489,42 +477,52 @@ function playerClicks() {
     let computerShipsSunk = computerCells.filter(shipsunk => ((shipsunk.classList.contains('enemyPosition')) && (shipsunk.classList.contains('shipHit'))))
     let playerShipsSunk = userCells.filter(shipsunk => (shipsunk.classList.contains('playerPosition' && 'shipHit')))
 
+    function keepPlaying() {
+        return (computerShipsSunk.length === 17) || (playerShipsSunk.length === 17)
+    }
 
     function currentPoints() { 
         computerShipsSunk = computerCells.filter(shipsunk => ((shipsunk.classList.contains('enemyPosition')) && (shipsunk.classList.contains('shipHit'))))
         playerShipsSunk = userCells.filter(shipsunk => (shipsunk.classList.contains('playerPosition' && 'shipHit')))
-        console.log(computerShipsSunk.length)
-        console.log(playerShipsSunk.length)
+        console.log(`computer ship sunk`,computerShipsSunk.length)
+        console.log(`player ship sunk`,playerShipsSunk.length)
     
-        if ((computerShipsSunk.length === 17) || (playerShipsSunk.length === 17)) {
-        showFinalScores()
-    }
     }
 
     
         function showFinalScores() {
-        console.log('GAME OVER BIATCH')
+        console.log('GAME OVER')
         currentPlayer = 'null'
 
         if (playerShipsSunk.length === 17) {
             console.log('Player Loses')
             window.alert("Player Loses, computer has sunk all your ships. Hit restart to go again")
+            // resetGame()
         } else if (computerShipsSunk.length === 17) {
             console.log('Player Wins')
             window.alert("Player Wins! Player has sunk all enemy ships. Hit restart to play again")
+            // resetGame()
         }
         
 
     }
 
     ////////////////////////////////////////////////RESET GAME///////////////////////////////////////////////////////////
+
+    function reassignShips() {
+        clearPlayerShips()
+        carrierPlayerSetter()
+        battleshipPlayerSetter()
+        cruiserPlayerSetter()
+        submarinePlayerSetter()
+        destroyerPlayerSetter()
+    }
+
+    randomiseButton.addEventListener('click', reassignShips )
+
         function clearPlayerShips() {
             userCells.forEach(cellId => cellId.classList.remove('playerPosition', 'carrier','battleship', 'cruiser', 'submarine', 'destroyer', 'shipHit', 'shipMiss'))
         } 
-        
-        function resetGame() {
-            reassignShips()
-            currentPlayer = 'user'
         
         function clearComputerShips() {
             computerCells.forEach(cellId => cellId.classList.remove('enemyPosition', 'carrier', 'battleship', 'cruiser', 'submarine', 'destroyer', 'shipHit', 'shipMiss'))
@@ -534,7 +532,11 @@ function playerClicks() {
             submarineSetter()
             destroyerSetter()
         }
-        clearComputerShips()
+        function resetGame() {
+            reassignShips()
+            currentPlayer = 'user'
+            clearComputerShips()
+        
     }
         
     resetButton.addEventListener('click', resetGame)
