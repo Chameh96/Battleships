@@ -19,6 +19,9 @@ body {
 .header h1 {
   font-size: 5em;
 }
+.header p {
+  font-size: 2em;
+}
 .grid-wrapper {
   display: flex;
   justify-content: space-around;
@@ -26,14 +29,17 @@ body {
 }
 .turns {
   font-family: "Tourney", cursive;
+  font-size: 1.2em;
+  width: 100px;
   align-self: center;
-  color: yellow;
+  color: white;
+  text-align: center;
 }
 .user-grid,
 .comp-grid {
   border: 1px solid darkblue;
   background-color: turquoise;
-  opacity: 0.6;
+  opacity: 0.7;
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);

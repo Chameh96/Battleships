@@ -456,7 +456,7 @@ function playerClicks() {
         }
         currentPlayer = 'computer'
         if (currentPlayer === 'computer') {
-            turnDisplay.innerHTML = 'Computer'
+            turnDisplay.innerHTML = 'Let the battle commence'
             setTimeout (computerGo, 500)
         }
         currentPlayer = 'user'
@@ -466,12 +466,21 @@ function playerClicks() {
     startButton.addEventListener('click', playGame)
 
     /////////////////////////////////////// PLAY MUSIC ////////////////////////////////////////////
-    function playMusic() {
-        audio1.currenTime =0
-        audio1.play()
-        
-    }
-    musicButton.addEventListener('click', playMusic)
+    let isPlaying = false;
+
+    function togglePlay() {
+        isPlaying ? audio1.pause() : audio1.play();
+        };
+
+        audio1.onplaying = function() {
+        isPlaying = true;
+        };
+        audio1.onpause = function() {
+        isPlaying = false;
+    };
+    
+    musicButton.addEventListener('click', togglePlay)
+    
 
     ////////////////////////////////////////////////////////GAME OVER/////////////////////////////////////////////////
     // TO WIN THE GAME, PUT EVERYTHING WITH CLASS LIST PLAYER && CLASSLIST OF SHIPHIT INTO AN ARRAY< IF THAT ARRAY REACHES LENGTH 17 = GAME OVER
