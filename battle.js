@@ -2,6 +2,7 @@ const startButton = document.querySelector('#startButton')
 const computersGo = document.querySelector('#computerGo')
 const resetButton = document.querySelector('#resetButton')
 const randomiseButton = document.querySelector('#reRollButton')
+const musicButton = document.querySelector('#music')
 const userGrid = document.querySelector('.user-grid')
 const computerGrid = document.querySelector('.comp-grid')
 const userShips = document.querySelector('.userShips')
@@ -15,6 +16,8 @@ const carrier =document.querySelector('.carrier-container')
 let turnDisplay = document.querySelector('.whoGo')
 let gameOver = false
 let currentPlayer = 'user'
+const audio = document.querySelector('#tunes')
+const audio1 = new Audio('piratesocarribbean.mp3')
 
 let isHorizontal = true
 
@@ -425,15 +428,19 @@ function playerClicks() {
     //do computer turn true/false if player turn is going
 
     console.log(userCells)
+    computerAttackChoice = userCells
 
     function computerGo() {
-        let random = Math.floor(Math.random() * userCells.length)
+        let random = Math.floor(Math.random() * computerAttackChoice.length)
+        const index = computerAttackChoice.indexOf(random)
+        computerAttackChoice.splice(index,1)
 
-        if (userCells[random].classList.contains('playerPosition')) {
-            userCells[random].classList.add('shipHit')
+        if (computerAttackChoice[random].classList.contains('playerPosition')) {
+            computerAttackChoice[random].classList.add('shipHit')
         } else {
-            userCells[random].classList.add('shipMiss')
+            computerAttackChoice[random].classList.add('shipMiss')
         }
+       
         currentPlayer = 'user'
         currentPoints()
         playerClicks()
@@ -453,17 +460,30 @@ function playerClicks() {
             setTimeout (computerGo, 500)
         }
         currentPlayer = 'user'
+        // audio.currentTime = 0
+       // audio1.play()
     }
     startButton.addEventListener('click', playGame)
+
+    /////////////////////////////////////// PLAY MUSIC ////////////////////////////////////////////
+    function playMusic() {
+        audio1.currenTime =0
+        audio1.play()
+        
+    }
+    musicButton.addEventListener('click', playMusic)
 
     ////////////////////////////////////////////////////////GAME OVER/////////////////////////////////////////////////
     // TO WIN THE GAME, PUT EVERYTHING WITH CLASS LIST PLAYER && CLASSLIST OF SHIPHIT INTO AN ARRAY< IF THAT ARRAY REACHES LENGTH 17 = GAME OVER
     // allCellsInBothGrids = userCells + computerCells
     // console.log(allCellsInBothGrids)
-    
+    let computerShipsSunk = computerCells.filter(shipsunk => ((shipsunk.classList.contains('enemyPosition')) && (shipsunk.classList.contains('shipHit'))))
+    let playerShipsSunk = userCells.filter(shipsunk => (shipsunk.classList.contains('playerPosition' && 'shipHit')))
+
+
     function currentPoints() { 
-        let computerShipsSunk = computerCells.filter(shipsunk => ((shipsunk.classList.contains('enemyPosition')) && (shipsunk.classList.contains('shipHit'))))
-        let playerShipsSunk = userCells.filter(shipsunk => (shipsunk.classList.contains('playerPosition' && 'shipHit')))
+        computerShipsSunk = computerCells.filter(shipsunk => ((shipsunk.classList.contains('enemyPosition')) && (shipsunk.classList.contains('shipHit'))))
+        playerShipsSunk = userCells.filter(shipsunk => (shipsunk.classList.contains('playerPosition' && 'shipHit')))
         console.log(computerShipsSunk.length)
         console.log(playerShipsSunk.length)
     
@@ -472,13 +492,12 @@ function playerClicks() {
     }
     }
 
-        let computerShipsSunk = computerCells.filter(shipsunk => ((shipsunk.classList.contains('enemyPosition')) && (shipsunk.classList.contains('shipHit'))))
-        let playerShipsSunk = userCells.filter(shipsunk => (shipsunk.classList.contains('playerPosition' && 'shipHit')))
-    function showFinalScores() {
+    
+        function showFinalScores() {
         console.log('GAME OVER BIATCH')
         currentPlayer = 'null'
 
-        if (playerShipsSunk === 17) {
+        if (playerShipsSunk.length === 17) {
             console.log('Player Loses')
             window.alert("Player Loses, computer has sunk all your ships. Hit restart to go again")
         } else if (computerShipsSunk.length === 17) {
@@ -509,5 +528,6 @@ function playerClicks() {
         clearComputerShips()
     }
         
-    resetButton.addEventListener('click', resetGame )
+    resetButton.addEventListener('click', resetGame)
+
 

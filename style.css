@@ -81,6 +81,14 @@ body {
   border: 1px solid turquoise;
   color: turquoise;
 }
+#music {
+  width: 60px;
+  height: 30px;
+  background-color: rgba(105, 105, 241, 0.589);
+  border: 1px solid turquoise;
+  color: turquoise;
+  margin: 10px;
+}
 #computerGo {
   height: 50px;
   width: 120px;
