@@ -218,27 +218,6 @@ const isACellValid = (cell) => {
     // }
     
     
-
-///////////////////////////////////////////////////PLAYER HITTING A SHIP//////////////////////////////////////////////////
-console.log(computerCells)
-console.log(userCells)
-
-function handleUserTurnClick(event) {
-    console.log('clicked')
-    console.log('event.target', event.target)
-    if (event.target.classList.contains('enemyPosition')) {
-        event.target.classList.add('shipHit')
-        console.log('HIT')
-    } else {
-        event.target.classList.add('shipMiss')
-        console.log('MISS')
-    }
-}
-function playerClicks() {
-    computerCells.forEach(cell => cell.addEventListener("click", handleUserTurnClick))
-}
-
-
 //////////////////////////////////// DRAGGING USER SHIPS /////////////////////////////
 // ships.forEach(ship => ship.addEventListener('dragstart', dragStart))
 // userSquares.forEach(square => square.addEventListener('dragstart', dragStart))
@@ -414,6 +393,31 @@ function buildPlayerShip(length) {
     }
 
     randomiseButton.addEventListener('click', reassignShips )
+
+    ///////////////////////////////////////////////////PLAYER HITTING A SHIP//////////////////////////////////////////////////
+console.log(computerCells)
+console.log(userCells)
+
+function handleUserTurnClick(event) {
+    console.log('clicked')
+    console.log('event.target', event.target)
+    if (event.target.classList.contains('enemyPosition')) {
+        event.target.classList.add('shipHit')
+        console.log('HIT')
+    } else {
+        event.target.classList.add('shipMiss')
+        console.log('MISS')
+    }
+    currentPlayer = 'computer'
+    currentPoints()
+    setTimeout(computerGo, 500)
+    
+}
+function playerClicks() {
+    computerCells.forEach(cell => cell.addEventListener("click", handleUserTurnClick))
+}
+
+
     /////////////////////////////////////////////////////////COMPUTER RANDOM ATTACK///////////////////////////////////////////////////////////
 
     //splice from array so doesnt do same move twice
@@ -430,6 +434,10 @@ function buildPlayerShip(length) {
         } else {
             userCells[random].classList.add('shipMiss')
         }
+        currentPlayer = 'user'
+        currentPoints()
+        playerClicks()
+        
     }
     ///////////////////////////////////GAME LOGIC////////////////////////////////////////
     function playGame() {
@@ -437,41 +445,69 @@ function buildPlayerShip(length) {
         if (currentPlayer === 'user') {
             turnDisplay.innerHTML = 'Player'
             playerClicks()
-            
 
         }
         currentPlayer = 'computer'
         if (currentPlayer === 'computer') {
             turnDisplay.innerHTML = 'Computer'
-            setTimeout (computerGo, 1000)
+            setTimeout (computerGo, 500)
         }
         currentPlayer = 'user'
     }
-    computersGo.addEventListener('click', playGame)
+    startButton.addEventListener('click', playGame)
 
-//     console.log(computerCells)
-// console.log(userCells)
-
-// function handleUserTurnClick(event) {
-//     console.log('clicked')
-//     console.log('event.target', event.target)
-//     if (event.target.classList.contains('enemyPosition')) {
-//         event.target.classList.add('shipHit')
-//         console.log('HIT')
-//     } else {
-//         event.target.classList.add('shipMiss')
-//         console.log('MISS')
-//     }
-// }
-// function playerClicks() {
-//     computerCells.forEach(cell => cell.addEventListener("click", handleUserTurnClick))
-// }
-// playerClicks()
-    ////////////////////////////////////////////////RESET GAME///////////////////////////////////////////////////////////
-
-    function clearPlayerShips() {
-        userCells.forEach(cellId => cellId.classList.remove('playerPosition', 'carrier','battleship', 'cruiser', 'submarine', 'destroyer', 'shipHit', 'shipMiss'))
-    }
+    ////////////////////////////////////////////////////////GAME OVER/////////////////////////////////////////////////
+    // TO WIN THE GAME, PUT EVERYTHING WITH CLASS LIST PLAYER && CLASSLIST OF SHIPHIT INTO AN ARRAY< IF THAT ARRAY REACHES LENGTH 17 = GAME OVER
+    // allCellsInBothGrids = userCells + computerCells
+    // console.log(allCellsInBothGrids)
     
+    function currentPoints() { 
+        let computerShipsSunk = computerCells.filter(shipsunk => ((shipsunk.classList.contains('enemyPosition')) && (shipsunk.classList.contains('shipHit'))))
+        let playerShipsSunk = userCells.filter(shipsunk => (shipsunk.classList.contains('playerPosition' && 'shipHit')))
+        console.log(computerShipsSunk.length)
+        console.log(playerShipsSunk.length)
+    
+        if ((computerShipsSunk.length === 17) || (playerShipsSunk.length === 17)) {
+        showFinalScores()
+    }
+    }
 
-// TO WIN THE GAME, PUT EVERYTHING WITH CLASS LIST PLAYER && CLASSLIST OF SHIPHIT INTO AN ARRAY< IF THAT ARRAY REACHES LENGTH 17 = GAME OVER
+        let computerShipsSunk = computerCells.filter(shipsunk => ((shipsunk.classList.contains('enemyPosition')) && (shipsunk.classList.contains('shipHit'))))
+        let playerShipsSunk = userCells.filter(shipsunk => (shipsunk.classList.contains('playerPosition' && 'shipHit')))
+    function showFinalScores() {
+        console.log('GAME OVER BIATCH')
+        currentPlayer = 'null'
+
+        if (playerShipsSunk === 17) {
+            console.log('Player Loses')
+            window.alert("Player Loses, computer has sunk all your ships. Hit restart to go again")
+        } else if (computerShipsSunk.length === 17) {
+            console.log('Player Wins')
+            window.alert("Player Wins! Player has sunk all enemy ships. Hit restart to play again")
+        }
+        
+
+    }
+
+    ////////////////////////////////////////////////RESET GAME///////////////////////////////////////////////////////////
+        function clearPlayerShips() {
+            userCells.forEach(cellId => cellId.classList.remove('playerPosition', 'carrier','battleship', 'cruiser', 'submarine', 'destroyer', 'shipHit', 'shipMiss'))
+        } 
+        
+        function resetGame() {
+            reassignShips()
+            currentPlayer = 'user'
+        
+        function clearComputerShips() {
+            computerCells.forEach(cellId => cellId.classList.remove('enemyPosition', 'carrier', 'battleship', 'cruiser', 'submarine', 'destroyer', 'shipHit', 'shipMiss'))
+            carrierSetter()
+            battleshipSetter()
+            cruiserSetter()
+            submarineSetter()
+            destroyerSetter()
+        }
+        clearComputerShips()
+    }
+        
+    resetButton.addEventListener('click', resetGame )
+
