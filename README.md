@@ -6,7 +6,7 @@ Battleships Original Style - This is my first project from the General Assembly 
 
 To create a winnable game using HTML, CSS and JavaScript within the one week timeframe.
 
-![Screenshot of the finished product](/Battleships/images/image3.png)
+![Screenshot of the finished product](images/image3.png)
 
 **Deployed Link:** https://chameh96.github.io/Battleships/
 
