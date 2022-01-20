@@ -2,14 +2,16 @@
 
 Battleships Original Style - This is my first project from the General Assembly course SEI-59
 
-##Goal:
+## Goal:
+
 To create a winnable game using HTML, CSS and JavaScript within the one week timeframe.
 
-![Screenshot of the finished product](./battleships/images/image3.png)
+![Screenshot of the finished product](/Battleships/images/image3.png)
 
 **Deployed Link:** https://chameh96.github.io/Battleships/
 
-##The Brief:
+## The Brief:
+
 The app we were tasked to create must:
 
 - Render a game in the browser.
@@ -32,7 +34,7 @@ Technologies Used:
 The game I played most as a child was battleships, spending hours playing against my brother and sister, so I wanted to recreate that for my first project at General Assembly.  
 To get started I broke the game down into different components (data, presentation, views, style and DOM Manipulation) then brainstormed each of them to create a plan and visualise it in my head.
 
-##Project Overview:
+## Project Overview:
 
 We started this project three weeks into the course, and it was the first time I had ever come across the technologies used, which was daunting to say the least. To get started I spent almost a day planning what I would need and trying to think of ways to write the various tasks. I created a list of features that I wanted the game to have, eventually splitting them into MVP and "future features". knowing that this game was grid focussed, I spent a fair amount of time thinking and pseudo-coding. After that I got the basic grid down in code and started trying to tackle the hardest aspect first, the randomised placement of the ships (ensuring they don’t overlap or go outside the container) see challenges and wins for more on this.
 
